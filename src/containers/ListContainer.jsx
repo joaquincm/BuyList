@@ -4,7 +4,7 @@ import { List, makeSelectable } from 'material-ui/List'
 import Paper from 'material-ui/Paper'
 import ListItemCustom from '../components/ListItem'
 import GridList from 'material-ui/GridList'
-import Modal from '../components/Modal'
+import { Modal } from '../components/Modal'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import { connect } from 'react-redux'
@@ -32,7 +32,6 @@ class ListContainer extends Component {
         this.handleModal = this.handleModal.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.setComplete = this.setComplete.bind(this);
-
     }
 
     componentWillMount() {
