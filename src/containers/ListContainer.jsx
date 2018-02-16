@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { List, makeSelectable } from 'material-ui/List'
 import Paper from 'material-ui/Paper'
-import ListItemCustom from '../components/ListItem'
+import ListCustom from '../components/ListItem'
 import GridList from 'material-ui/GridList'
+import RaisedButton from 'material-ui/RaisedButton'
 import { Modal } from '../components/Modal'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -27,11 +28,11 @@ class ListContainer extends Component {
             modificado: false
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleNuevoItem = this.handleNuevoItem.bind(this);
-        this.handleModal = this.handleModal.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.setComplete = this.setComplete.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleNuevoItem = this.handleNuevoItem.bind(this)
+        this.handleModal = this.handleModal.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
+        this.setComplete = this.setComplete.bind(this)
     }
 
     componentWillMount() {
@@ -39,16 +40,16 @@ class ListContainer extends Component {
     }
 
     handleNuevoItem(event) {
-        this.setState({ [event.target.name] : event.target.value })
+        this.setState({ [event.target.name]: event.target.value })
     }
 
     handleModal = () => {
-        this.setState({ modalOpen: !this.state.modalOpen });
-    };
+        this.setState({ modalOpen: !this.state.modalOpen })
+    }
 
     handleClose = () => {
-        this.setState({ modalOpen: false });
-    };
+        this.setState({ modalOpen: false })
+    }
 
     async handleSubmit() {
 
@@ -74,11 +75,12 @@ class ListContainer extends Component {
                 body: searchParams
             })
 
-            const response = await responseD.json()
+            let response = await responseD.json()
 
             this.props.actions.addItem(response.item)
 
             this.setState({ modalOpen: false })
+
         } else {
 
             this.props.actions.setError(true)
@@ -91,41 +93,43 @@ class ListContainer extends Component {
         const res_swal = await swal({
             title: 'Está seguro?',
             type: 'warning',
-            showCancelButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, elimínalo',
-            showLoaderOnConfirm: true,
+            showLoaderOnConfirm: true
         })
-        
- 
-        if(res_swal.value){
+
+
+        if (res_swal.value) {
             const responseD = await fetch(config.API + 'delete/' + id, {
-                                method: 'DELETE',
-                                headers: new Headers({
-                                        'Content-Type': 'application/x-www-form-urlencoded',
-                                        'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
-                                    }),
-                                })
+                method: 'DELETE',
+                headers: new Headers({
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+                })
+            })
 
             let response = await responseD.json()
-            
+
             if (response.res === config.STATUS_OK) {
 
                 let index_array = _.findIndex(this.props.lista, { _id: id })
                 this.props.actions.deleteItem(index_array)
 
                 swal(
-                'Eliminado!',
-                '',
-                'success'
+                    'Eliminado!',
+                    '',
+                    'success'
                 )
-            }  
+            }
         }
     }
 
-    async setComplete(id){
-        let index_array = _.findIndex( this.props.lista, {_id: id} )
+    async setComplete(id) {
+
+        let index_array = _.findIndex(this.props.lista, { _id: id })
 
         const responseD = await fetch(config.API + 'setCompleted/' + id, {
             method: 'PUT',
@@ -133,15 +137,14 @@ class ListContainer extends Component {
                 'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
                 'Content-Type': 'application/x-www-form-urlencoded'
             }),
-            body: "completado="+!this.props.lista[index_array].completado
+            body: "completado=" + !this.props.lista[index_array].completado
         })
 
         const response = await responseD.json()
-       
+
         this.props.lista[index_array].completado = !this.props.lista[index_array].completado
 
         this.props.actions.setCompleteItem(this.props.lista[index_array])
-
     }
 
     render() {
@@ -149,7 +152,7 @@ class ListContainer extends Component {
             <div style={styles.root}>
 
                 <Paper style={styles.paper} zDepth={5}>
-                    <ListItemCustom onSetComplete={this.setComplete} onTouchTap={this.handleDelete} lista={this.props.lista}/>
+                    <ListCustom onSetComplete={this.setComplete} onTouchTap={this.handleDelete} lista={this.props.lista} />
                 </Paper>
 
                 <Modal isOpen={this.state.modalOpen} hasError={this.props.error} onClose={this.handleClose} onChange={this.handleNuevoItem} onSubmit={this.handleSubmit} />
@@ -184,7 +187,7 @@ ListContainer.defaultProps = {
     error: false
 }
 
-export default connect(mapStateToProps, mapDispatchToProps )(ListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ListContainer)
 
 
 const styles = {
@@ -198,7 +201,6 @@ const styles = {
         width: 450,
         height: 700,
         padding: 0,
-        // backgroundColor: '#eaeaea',
         overflowY: 'auto',
         display: 'block',
         marginLeft: 'auto',

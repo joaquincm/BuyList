@@ -20,25 +20,26 @@ const Rotate = styled.div`
   display: inline-block;
   animation: ${rotate360} 2s linear infinite;`;
 
+
 export const TopBar = () => (
     <div>
-    <AppBar style={styles.appBar} title={<span>Buy List</span>}
+        <AppBar style={styles.appBar} title={<span>Buy List</span>}
 
-        iconElementLeft={
-            <IconButton>
-                <Rotate>
-                    <ContentPasteIcon style={styles.icono} />
-                </Rotate>
-            </IconButton>
-        }
+            iconElementLeft={
+                <IconButton>
+                    <Rotate>
+                        <ContentPasteIcon style={styles.icono} />
+                    </Rotate>
+                </IconButton>
+            }
 
-        iconElementRight={
-            <IconButton>
-                <MailIcon />
-            </IconButton>
-        }
-    />
-</div>
+            iconElementRight={
+                <IconButton>
+                    <MailIcon />
+                </IconButton>
+            }
+        />
+    </div>
 )
 
 const styles = {

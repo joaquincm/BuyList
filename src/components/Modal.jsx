@@ -70,8 +70,7 @@ export class Modal extends Component{
         }
     }
 
-    render() {
-         
+    render() {         
         const actions = [
             <FlatButton
                 label="Cancelar"
