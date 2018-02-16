@@ -21,8 +21,9 @@ const ListCustom = (({ lista, onTouchTap, onSetComplete }) =>
                 let cantidad = item.cantidad != 'null' ? ' x ' + item.cantidad : ''
 
                 if (item.completado) {
-                    icon = <DoneIcon style={styles.doneIcon} />
+                    icon = <DoneIcon style={styles.doneElementIcon} />
                     texto = <span style={styles.doneText}> {item.texto} </span>
+                    cantidad = <span style={styles.doneText}>{cantidad}</span>
                 }
                 else {
                     icon = <ListIcon />
@@ -30,7 +31,7 @@ const ListCustom = (({ lista, onTouchTap, onSetComplete }) =>
                 }
 
                 return (
-
+                    <div style={item.completado ? styles.doneElement : styles.normalElement}>
                     <span key={uuidv4()}>
 
                         <ListItem
@@ -39,14 +40,16 @@ const ListCustom = (({ lista, onTouchTap, onSetComplete }) =>
                             index={i}
                             onDoubleClick={() => onSetComplete(item._id)}
                             leftIcon={icon}
-                            rightIcon={<RemoveIcon onClick={() => onTouchTap(item._id)} hoverColor='red' />}
+                            rightIcon={<RemoveIcon onClick={() => onTouchTap(item._id)} hoverColor='red' style={item.completado ? styles.doneElementIcon : {}} />}
                         >
                             {texto}
                             {cantidad}
                         </ListItem>
 
                         <Divider />
-                    </span>)
+                    </span>
+                    </div>
+                    )
             }).reverse()
         }
     </div>
@@ -71,6 +74,18 @@ const styles = {
         padding: 0
     },
     doneText: {
-        textDecoration: 'line-through'
+        textDecoration: 'line-through',
+        color: 'white'
+    },
+    doneElement: {
+        // rgb(63, 81, 181)
+        backgroundColor: 'rgb(63, 81, 181)'
+    },
+    doneElementIcon: {
+        fill: 'white'
+    },
+    normalElement: {
+        backgroundColor: 'white'
     }
+
 }

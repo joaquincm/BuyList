@@ -93,8 +93,8 @@ class ListContainer extends Component {
         const res_swal = await swal({
             title: 'Está seguro?',
             type: 'warning',
-            showCancelButton: false,
-            showConfirmButton: false,
+            showCancelButton: true,
+            showConfirmButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Sí, elimínalo',
@@ -113,7 +113,7 @@ class ListContainer extends Component {
 
             let response = await responseD.json()
 
-            if (response.res === config.STATUS_OK) {
+            // if (response.res === config.STATUS_OK) {
 
                 let index_array = _.findIndex(this.props.lista, { _id: id })
                 this.props.actions.deleteItem(index_array)
@@ -123,7 +123,7 @@ class ListContainer extends Component {
                     '',
                     'success'
                 )
-            }
+            // }
         }
     }
 
